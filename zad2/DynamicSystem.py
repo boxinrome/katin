@@ -2,34 +2,29 @@ from DynamicClass import DynamicClass
 
 
 def main():
-    VAR = 9  
-    print(f"=== Расчет динамической системы для var = {VAR} ===")
+    VAR = 12 
+
+    print(f"=== Запуск для var = {VAR} ===")
     
-    # инициализация модели
     system = DynamicClass(
         var=VAR,
-        x_range=(-1.8, 1.8),
-        y_range=(-1.5, 1.5),
-        resolution=1200,
-        max_iter=200
+        x_range=(-1.6, 1.6),
+        y_range=(-1.3, 1.3),
+        resolution=1024,
+        max_iter=100
     )
 
-    print("Вычисление множества ограниченных точек...")
+    print(f"Параметр c = {system.c.real:.4f}")
+    print("Вычисление точек...")
     system.compute()
 
-    # Оценка размерности границы
-    dim_boundary = system.estimate_dimension(target='boundary')
-    # Оценка размерности всей закрашенной области
-    dim_filled = system.estimate_dimension(target='filled')
+    dim = system.estimate_dimension()
+    print("\n-------------------------------------------")
+    print(f"Оценка размерности области: D ≈ {dim:.4f}")
+    print("-------------------------------------------")
 
-    print("\n--- Результаты оценки размерности ---")
-    print(f"Размерность границы области : D ≈ {dim_boundary:.4f}")
-    print(f"Размерность самой закрашенной области:       D ≈ {dim_filled:.4f}")
-    print("-----------------------------------------------------")
-
-    # Отображение графика
-    print("Построение визуализации...")
-    system.plot(show_colored=True)
+    print("Построение графика...")
+    system.plot()
 
 
 if __name__ == "__main__":
